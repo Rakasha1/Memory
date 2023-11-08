@@ -12,6 +12,10 @@ namespace Business
         public bool Turned { get; set; }
         public int Value { get; set; }
         public string? ImagePath { get; set; }
+        public Card(int id) 
+        {
+            ID = id;
+        }
         public Card(int id, int value)
         {
             Value = value;

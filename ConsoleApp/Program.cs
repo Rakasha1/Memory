@@ -1,17 +1,55 @@
 ﻿using Business;
 using ConsoleApp;
+using Data;
 using System.Diagnostics;
+
+
+
 
 //Start van het spel Memory
 Console.WriteLine("Welkom bij memory!");
 Game game = new Game();
 AskFunctions askFunctions = new AskFunctions();
 
+
+
+//Vraag om de naam
+
+string naam = null;
+while (string.IsNullOrWhiteSpace(naam))
+{
+    Console.WriteLine("Wat is je naam?");
+    naam = Console.ReadLine();
+
+}
+
 //Bepaal het aantal paren kaarten
-Console.WriteLine("Hoeveel couples wil je hebben?");
-var totalCouplesInsert = Console.ReadLine();
-int totalCouples = int.Parse(totalCouplesInsert);
-List<Card> cards = game.TotalCouples(totalCouples);
+
+////initialiseren
+List<Card> cards = new List<Card>();
+
+int totalCouples = 0;
+
+//
+bool bol = true;
+while (bol)
+{
+    try
+    {
+        Console.WriteLine("Hoeveel couples wil je hebben?");
+        var totalCouplesInsert = Console.ReadLine();
+        totalCouples = int.Parse(totalCouplesInsert);
+        cards = game.TotalCouples(totalCouples);
+        askFunctions.Kolomrijen(totalCouples);
+        bol = false;
+    }
+    catch (FormatException exp)
+    {
+        Console.WriteLine($"er is een fout " + exp.Message);
+        Console.WriteLine($"typ een getal");
+
+    }
+}
 
 //Schud de kaarten
 game.AllCards = game.ShuffleCard(cards);
@@ -53,5 +91,11 @@ while (true)
 sw.Stop();
 double timeElapsed = sw.Elapsed.TotalSeconds;
 Console.WriteLine("Time elapsed = " + timeElapsed);
-Console.WriteLine("Score = " + game.CalculateScore(timeElapsed));
+Console.WriteLine("Score = " + game.CalculateScore(timeElapsed, naam, totalCouples));
+Console.WriteLine();///////////////////////veranderd
+Console.WriteLine("Highscores top 10");
+game.HighScoreManager.printHighScore();
 
+//clear leader bord
+//game.HighScoreManager.VerwijderHighscores(); 
+// Verwijder alle highscores

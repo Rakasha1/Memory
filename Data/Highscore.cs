@@ -10,24 +10,27 @@ namespace Data
     {
         public string UserName { get; set; }
         public double Score { get; set; }
+        public int AantalKaarten { get; set; }
 
         public HighScore()
         {
             // Lege parameterloze constructor, vereist voor deserialisatie
         }
-        public HighScore(string userName, double score)
+        public HighScore(string userName, double score, int kaarten)
         {
             Score = score;
             UserName = userName;
+            AantalKaarten = kaarten;
             HighScoreManager highScoreManagerhigh = new HighScoreManager();
-            highScoreManagerhigh.AddHighScore(userName, score);
+            highScoreManagerhigh.AddHighScore(userName, score, kaarten);
         }
 
-        public HighScore(string userName, double score, HighScoreManager highScoreManager)
+        public HighScore(string userName, double score, int kaarten, HighScoreManager highScoreManager)
         {
             Score = score;
             UserName = userName;
-            highScoreManager.AddHighScore(userName, score);
+            AantalKaarten = kaarten;
+            highScoreManager.AddHighScore(userName, score, kaarten);
         }
     }
 

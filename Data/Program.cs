@@ -10,7 +10,9 @@ class Program
         HighScoreManager highScoreManager = new HighScoreManager();
         /*highScoreManager.AddHighScore("Gebruiker1", 1000);*/
 
+
         highScoreManager.printHighScore();
+
 
     }
 }

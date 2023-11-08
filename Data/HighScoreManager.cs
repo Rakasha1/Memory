@@ -7,25 +7,24 @@ namespace Data
 {
     public class HighScoreManager
     {
-        private const string JsonFilePath = "highscores.json";
+        
+        private const string JsonFilePath = "C:\\Users\\gertv\\OneDrive\\Windesheim\\Jaar2\\OOSD\\C#_Programmeren\\Aftekenopdrachten\\Memory\\Data\\highscores.json"; // pas dit aan naar waar je eigen data mapje staat
         private const int MaxHighScores = 10;
 
         private List<HighScore> highScores = new List<HighScore>();
 
         public HighScoreManager()
         {
-            if (File.Exists(JsonFilePath))
+            if (!File.Exists(JsonFilePath)) // Voeg een controle toe om te zien of het bestand al bestaat
+            {
+                SaveToJsonFile(); // Als het bestand niet bestaat, maak het dan aan
+            }
+            else
             {
                 // Als het JSON-bestand al bestaat, laad het
                 string json = File.ReadAllText(JsonFilePath);
                 highScores = JsonSerializer.Deserialize<List<HighScore>>(json);
             }
-            else
-            {
-                // Als het JSON-bestand niet bestaat, maak een leeg bestand aan
-                SaveToJsonFile();
-            }
-
         }
 
         public List<HighScore> GetTopHighScores()
@@ -36,17 +35,17 @@ namespace Data
 
         public void printHighScore()
         {
-            foreach (var highScore in highScores)
+            for (int i = 0; i < highScores.Count; i++)
             {
-                Console.WriteLine($"Gebruiker: {highScore.UserName}, Score: {highScore.Score}");
+                Console.WriteLine($"{i + 1}.    Gebruiker: {highScores[i].UserName}, Score: {highScores[i].Score}, Aantal kaarten: {highScores[i].AantalKaarten}");
             }
         }
 
-        public void AddHighScore(string userName, double scoreValue)
+        public void AddHighScore(string userName, double scoreValue, int aantalKaarten)
         {
             //nieuwe score toevoegen aan de lijst highscore
-            highScores.Add(new HighScore { UserName = userName, Score = scoreValue });
-            // highScores = highScores.OrderByDescending(highscore => highscore.Score).ToList(); // Sorteer de lijst op score in aflopende volgorde
+            highScores.Add(new HighScore { UserName = userName, Score = scoreValue, AantalKaarten = aantalKaarten *2 });
+
             //sorteerd lijst
             GetTopHighScores();
 
@@ -67,6 +66,14 @@ namespace Data
 
             // Schrijf de JSON-gegevens naar het bestand
             File.WriteAllText(JsonFilePath, json);
+        }
+        public void VerwijderHighscores()
+        {
+            // Maak de lijst met highscores leeg
+            highScores.Clear();
+
+            // Sla de lege lijst op in JSON om het bestaande bestand te overschrijven
+            SaveToJsonFile();
         }
     }
 }
