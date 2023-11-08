@@ -1,0 +1,18 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPFApp"
+        xmlns:Business="clr-namespace:Business;assembly=Business" x:Class="WPFApp.RegisterWindow"
+        mc:Ignorable="d"
+        Title="Registreren" Height="700" Width="1000">
+    <Grid>
+        <Label x:Name="NaamLabel" Content="Naam:" HorizontalAlignment="Left" Margin="429,118,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="AantalParenLabel" Content="Aantal Paren:" HorizontalAlignment="Left" Margin="429,224,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="NaamTextBox" HorizontalAlignment="Left" Margin="429,149,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="..." />
+        <TextBox x:Name="AantalParenTextBox" HorizontalAlignment="Left" Margin="429,250,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0"/>
+        <Button x:Name="GameStartButton" Content="Start Game" HorizontalAlignment="Left" Margin="458,342,0,0" VerticalAlignment="Top" Click="GameStartButton_Click"/>
+
+    </Grid>
+</Window>
