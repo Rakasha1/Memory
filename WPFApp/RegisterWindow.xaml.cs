@@ -35,8 +35,8 @@ namespace WPFApp
         {
             //Name en couples bepalen
             MainGame.Name = NaamTextBox.Text;
-            /*try
-            {*/
+            try
+            {
                 //Aantal paren bepalen
                 int couples = Int32.Parse(AantalParenTextBox.Text);
                 var lijst = MainGame.TotalCouples(couples);
@@ -46,11 +46,11 @@ namespace WPFApp
                 GameWindow gameWindow = new GameWindow();
                 gameWindow.Show();
                 this.Close();
-            /*}
+            }
             catch (Exception ex)
             {
                 MessageBox.Show("Vul een getal in! " + ex.GetType() + ex.Message);
-            }*/
+            }
             
         }
 

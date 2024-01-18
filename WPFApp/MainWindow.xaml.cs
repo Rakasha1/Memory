@@ -26,12 +26,14 @@ namespace WPFApp
             // Center the window on the screen
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
         }
+
         private void StartKnop_Click(object sender, RoutedEventArgs e)
         {
             RegisterWindow register = new RegisterWindow();
             register.Show();
             this.Close();
         }
+
         private void HighScore_Click(object sender, RoutedEventArgs e)
         {
             HighscoresWindow highScore = new HighscoresWindow();

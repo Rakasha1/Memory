@@ -35,7 +35,7 @@ namespace Business
             Tries++;//Pogingen wordt verhoogd
             if (card1 != null && card2 != null)
             {
-                if (card1.ID == card2.ID)//Vergelijk de ID's van 2 kaarten
+                if (card1.Value == card2.Value)//Vergelijk de Values van 2 kaarten
                 {
                     CouplesDone++;//Paren die compleet zijn wordt verghoogt als beide ID's gelijk zijn
                     return true;
@@ -155,7 +155,7 @@ namespace Business
                 {
                     if (card.Turned)
                     {
-                        Console.Write(card.ID + "     ");
+                        Console.Write(card.Value + "     ");
                     }
                     else
                     {

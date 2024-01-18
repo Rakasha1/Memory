@@ -28,10 +28,6 @@ namespace WPFApp
 
             HighScoreManager highScoreManager = new HighScoreManager();
 
-            //Test voor nu
-            //highScoreManager.AddHighScore("fse", 45);
-            //highScoreManager.AddHighScore("dsaf", 45);
-
             List<HighScore> highScores = highScoreManager.GetTopHighScores();
             foreach (HighScore highScore in highScores)
             {

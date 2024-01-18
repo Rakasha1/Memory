@@ -14,15 +14,17 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-//using static System.Net.Mime.MediaTypeNames;
 
 namespace WPFApp
 {
     public partial class GameWindow : Window
     {
         private List<string> ImageSources; // Lijst van afbeeldingsbronnen
-        Game MainGame = new Game();
+        Game WPFgame = new Game();
         private List<Card> ShuffledCards; // Lijst van kaarten na het schudden
+        private bool OneIsTurned = false;
+        private Card TurnedCard;
+        private Button TurnedButton;
 
 
         public GameWindow()
@@ -53,7 +55,7 @@ namespace WPFApp
             solutionDirectory + "Data\\Pictures\\ezel11.jpg",
             };
 
-            var cards = MainGame.TotalCouples(5);
+            var cards = WPFgame.TotalCouples(5);
             //MessageBox.Show(cards.Count().ToString());
             var cardsCompleted = GiveCardsPictures(cards);
             ShuffledCards = ShuffleCards(cardsCompleted);
@@ -64,10 +66,10 @@ namespace WPFApp
         //Methode om aan de kaarten een image toe te wijzen
         private List<Card> GiveCardsPictures(List<Card> cards)
         {
-            for (int i = 0; i < cards.Count(); i=i+2)
+            for (int i = 0; i < cards.Count(); i = i + 2)
             {
                 cards[i].ImagePath = ImageSources[i];
-                cards[i+1].ImagePath = ImageSources[i];
+                cards[i + 1].ImagePath = ImageSources[i];
             }
             return cards;
         }
@@ -93,30 +95,65 @@ namespace WPFApp
         // ER MOET NOG CODE KOMEN WAARIN HET AANTAL KAARTEN WORDT VERWERKT
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            TurnButton(sender);
-            //game.Match();
+            
+            //Krijg index van
+            Button button = (Button)sender;
+            var nummer = button.Name.Substring(button.Name.Length - 1);
+            int getalIndex = int.Parse(nummer);
+
+            if (OneIsTurned)
+            {
+                TurnButton(sender);
+                if (!(WPFgame.Match(TurnedCard, ShuffledCards[getalIndex])))
+                {
+                    System.Threading.Thread.Sleep(1000);
+                    button.Content = "?";
+                    TurnedButton.Content = "?";
+                }
+                OneIsTurned = false;
+            }
+            else
+            {
+                TurnButton(sender);
+                TurnedButton = (Button)sender;
+            }
+
+            //Als alle couples gevonden zijn, door naar einde scherm
+            if (WPFgame.CouplesDone == 5)
+            {
+                EindeWindow eindeWindow = new EindeWindow();
+                eindeWindow.Show();
+                this.Close();
+            }
         }
 
         private void TurnButton(object sender)
         {
             Button button = (Button)sender;
 
-            // Zoek de rij- en kolomindex van de knop in de grid
-            int rowIndex = Grid.GetRow(button);
-            int columnIndex = Grid.GetColumn(button);
-
             // Zoek de bijbehorende afbeeldingsbron op basis van de rij en kolomindex
             var nummer = button.Name.Substring(button.Name.Length - 1);
             int imageIndex = int.Parse(nummer);
+            var tempCard = ShuffledCards[imageIndex];
+            if (!OneIsTurned)
+            {
+                TurnedCard = tempCard;
+            }
 
             if (imageIndex >= 0 && imageIndex < ShuffledCards.Count)
             {
+
                 // Maak een nieuwe Image aan met de bijbehorende afbeeldingsbron
                 Image image = new Image();
-                image.Source = new BitmapImage(new Uri(ShuffledCards[imageIndex].ImagePath));
+                image.Source = new BitmapImage(new Uri(tempCard.ImagePath));
 
                 // Vervang de inhoud van de knop door de Image
                 button.Content = image;
+
+                // Geef aan dat de kaart omgedraaid is
+                tempCard.Turned = true;
+                OneIsTurned = true;
+
             }
         }
 
@@ -126,9 +163,6 @@ namespace WPFApp
             // maak het scherm leeg
             MemoryGrid.RowDefinitions.Clear();
             MemoryGrid.ColumnDefinitions.Clear();
-
-            //haal lijst met kaarten op
-           
 
             //print het aantal kollomen en rijen die opgegeven zijn
             for (int i = 0; i < rowCount; i++)
@@ -149,10 +183,9 @@ namespace WPFApp
                 for (int column = 0; column < columnCount; column++)
                 {
                     Button button = new Button();
-                    button.Name = $"Button_{ShuffledCards[cardid].ID.ToString()}" ;
+                    button.Name = $"Button_{ShuffledCards[cardid].ID.ToString()}";
                     cardid++;
-                    /*int imageIndex = rowCount * MemoryGrid.ColumnDefinitions.Count + columnCount;
-                    button.DataContext = ShuffledCards[imageIndex];*/
+
                     button.Content = "?";
 
                     Grid.SetRow(button, row);
@@ -164,6 +197,7 @@ namespace WPFApp
                 }
             }
         }
+
 
     }
 }

@@ -28,7 +28,9 @@ namespace WPFApp
 
         private void Verder_Click(object sender, RoutedEventArgs e)
         {
-
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
+            this.Close();            
         }
     }
 }
