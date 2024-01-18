@@ -24,8 +24,8 @@ namespace BLTests
         {
             // Arrange
             Game game = new Game();
-            Card card1 = new Card(1);
-            Card card2 = new Card(1);
+            Card card1 = new Card(1,1);
+            Card card2 = new Card(1,1);
 
             // Act
             bool isMatch = game.Match(card1, card2);
@@ -39,8 +39,8 @@ namespace BLTests
         {
             // Arrange
             Game game = new Game();
-            Card card1 = new Card(1);
-            Card card2 = new Card(2);
+            Card card1 = new Card(1,1);
+            Card card2 = new Card(2,1);
 
             // Act
             bool isMatch = game.Match(card1, card2);
@@ -55,7 +55,7 @@ namespace BLTests
             // Arrange
             Game game = new Game();
             game.AllCards = new List<Card>[2, 2]; // Voorbeeld van een 2x2 grid
-            game.AllCards[0, 0] = new List<Card> { new Card(1) };
+            game.AllCards[0, 0] = new List<Card> { new Card(1,1) };
             int expectedCardId = 1;
 
             // Act
@@ -88,7 +88,7 @@ namespace BLTests
             Game game = new Game();
             List<Card> cards = new List<Card>
             {
-                new Card(1), new Card(2), new Card(3), new Card(4)
+                new Card(1, 1), new Card(2, 1), new Card(3, 1), new Card(4, 1)
             };
 
             // Act

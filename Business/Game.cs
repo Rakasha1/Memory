@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
-using System.Threading.Tasks;
-using Data;
+using System.Threading.Tasks; 
 
 namespace Business
 {
@@ -14,7 +13,6 @@ namespace Business
         public int Tries { get; set; } // hoeveel keren er geprobeerd is 2 kaarten te matchen
         public List<Card>[,] AllCards { get; set; }
         public string Name { get; set; }
-        public HighScoreManager HighScoreManager { get; set; } = new HighScoreManager();
 
 
         public List<Card> TotalCouples(int couples)//Bepaalt hoeveelheid paren er in het spel zijn
@@ -103,16 +101,14 @@ namespace Business
 
         //Bereken de totale score
         //timeElapsed komt van de stopwatch
-        public double CalculateScore(double timeElapsed, string naam, int totalCouples) ///////////////////////veranderd
+        public double CalculateScore(double timeElapsed, int amountOfCards) 
         {
             if (Tries != 0)
             {
 
-                double number = Math.Pow(AllCards.Length, 2);
+                double number = Math.Pow(amountOfCards, 2);
                 number = (number / (timeElapsed * Tries)) * 1000;
-                //HighScoreManager highScoreManager = new HighScoreManager();
-                new HighScore(naam, number, totalCouples, HighScoreManager);
-                //HighScoreManager = highScoreManager;
+
                 return number;
             }
             return 0;

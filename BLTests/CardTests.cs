@@ -15,7 +15,7 @@ namespace BLTests
             bool expectedTurned = false;
 
             // Act
-            Card card = new Card(expectedId);
+            Card card = new Card(expectedId, 1);
 
             // Assert
             Assert.That(card.ID, Is.EqualTo(expectedId));

@@ -1,9 +1,7 @@
 ﻿using Business;
 using ConsoleApp;
-using Data;
 using System.Diagnostics;
-
-
+using Data;
 
 
 //Start van het spel Memory
@@ -79,8 +77,6 @@ while (true)
     {
         break;
     }
-    //Eventuele Console.Clear()
-    //Console.Clear();
 
     //Print het bord, hier staan alleen de gevonden paren op
     Console.WriteLine("Zo ziet het bord er nu uit");
@@ -91,10 +87,16 @@ while (true)
 sw.Stop();
 double timeElapsed = sw.Elapsed.TotalSeconds;
 Console.WriteLine("Time elapsed = " + timeElapsed);
-Console.WriteLine("Score = " + game.CalculateScore(timeElapsed, naam, totalCouples));
-Console.WriteLine();///////////////////////veranderd
+
+
+var score = game.CalculateScore(timeElapsed, game.AllCards.Length);
+new HighScore(naam, score, totalCouples);
+Console.WriteLine("Score = " + score);
+Console.WriteLine();
 Console.WriteLine("Highscores top 10");
-game.HighScoreManager.printHighScore();
+
+HighScoreManager high = new HighScoreManager();
+high.printHighScore();
 
 //clear leader bord
 //game.HighScoreManager.VerwijderHighscores(); 
